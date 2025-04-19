@@ -1,66 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Daredevil: Born Again - Season 1</title>
+  <meta charset="UTF-8">
+  <title>Fantastic Four Collection</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-family: 'Orbitron', sans-serif;
       background: url('https://images.wallpapersden.com/image/download/marvel-fantastic-four-4k-logo_bGpoaGuUmZqaraWkpJRqZmVlrWhoZWU.jpg') no-repeat center center fixed;
       background-size: cover;
       color: white;
-      text-align: center;
-      backdrop-filter: brightness(0.4);
     }
-
     .overlay {
-      background-color: rgba(0, 0, 0, 0.6);
+      background-color: rgba(0, 0, 0, 0.75);
       min-height: 100vh;
-      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 30px;
     }
-
     h1 {
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
+      font-size: 3rem;
+      margin-bottom: 40px;
+      text-shadow: 2px 2px #000;
     }
-
-    .episodes {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1.5rem;
-      max-width: 1000px;
-      margin: 2rem auto;
+    .movie-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
     }
-
-    .episode {
+    .movie-card {
       background: rgba(255, 255, 255, 0.1);
-      padding: 1rem;
-      border-radius: 12px;
-      transition: background 0.3s;
+      border: 2px solid #00aaff;
+      border-radius: 15px;
+      padding: 20px;
+      width: 280px;
+      text-align: center;
+      backdrop-filter: blur(6px);
+      cursor: pointer;
+      transition: transform 0.3s, background 0.3s;
     }
-
-    .episode:hover {
-      background: rgba(255, 255, 255, 0.2);
+    .movie-card:hover {
+      transform: scale(1.05);
+      background: rgba(0, 170, 255, 0.2);
     }
-
-    .episode a {
-      color: white;
+    .movie-card a {
       text-decoration: none;
-      font-size: 1.1rem;
-      font-weight: bold;
-      display: block;
+      color: #ffffff;
+      font-size: 1.2rem;
     }
   </style>
 </head>
 <body>
   <div class="overlay">
-    <h1>Daredevil: Born Again - Season 1</h1>
-    <div class="episodes">
-      <div class="episode"><a href="movie1.html">Fantastic Four-2005</a></div>
-      <div class="episode"><a href="movie2.html">Fantastic Four: Rise of the Silver Surfer-2007</a></div>
-      <div class="episode"><a href="movie3.html">Fantastic Four-2015</a></div>
+    <h1>Fantastic Four Movie Collection</h1>
+    <div class="movie-container">
+      <div class="movie-card"><a href="fantastic-four-2005.html">Fantastic Four (2005)</a></div>
+      <div class="movie-card"><a href="fantastic-four-2007.html">Rise of the Silver Surfer (2007)</a></div>
+      <div class="movie-card"><a href="fantastic-four-2015.html">Fantastic Four (2015)</a></div>
     </div>
   </div>
 </body>
