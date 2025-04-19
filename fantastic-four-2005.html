@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Fantastic Four (2005)</title>
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+  <style>
+    body {
+      background-color: #000;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+    video {
+      width: 90%;
+      max-width: 900px;
+      border: 4px solid #00aaff;
+      border-radius: 10px;
+      background-color: black;
+    }
+    .back-button {
+      margin-top: 20px;
+      background-color: #00aaff;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 10px;
+      text-decoration: none;
+      font-size: 1rem;
+      transition: background 0.3s;
+    }
+    .back-button:hover {
+      background-color: #0077cc;
+    }
+  </style>
+</head>
+<body>
+  <video id="video" controls></video>
+  <a href="index.html" class="back-button">⬅ Back to Collection</a>
+
+  <script>
+    const video = document.getElementById('video');
+    const videoSrc = "https://f12.megacdn.co:2228/v3-hls-playback/cc82715241b28576249b7e19d3df3dd0b927134c07d19d20265f06bde9521c4b3c8cc256949f4cc4ea69c6194308d6fe190776cd153703b2c794fd17b954048c5cafa73c74a50e2165bb7c16bde8882f0faad73b1952a718c7dc0562633b7c147a197023723d85a76c5c32e3bf32afaaac613a994753f20abab65164d5aa3c23f8167d7625a2c1413e8d36c96a721d7342abf11ea0cf83f0f7c61e8a01e322533cdac5f706970590e234cdd8483b01aea87d8cc1caa1f4e35e01164d31290c16/1080/index.m3u8";
+
+    if (Hls.isSupported()) {
+      const hls = new Hls();
+      hls.loadSource(videoSrc);
+      hls.attachMedia(video);
+    } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+      video.src = videoSrc;
+    }
+  </script>
+</body>
+</html>
