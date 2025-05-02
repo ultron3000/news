@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Fantastic Four Collection</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
   <style>
@@ -56,6 +56,15 @@
       text-decoration: none;
       color: #ffffff;
       font-size: 1.1rem;
+      display: block;
+      margin-top: 10px;
+    }
+    .movie-card img {
+      width: 100%;
+      max-height: 300px;
+      border-radius: 10px;
+      object-fit: cover;
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
     }
 
     @media(min-width: 768px) {
@@ -74,9 +83,18 @@
   <div class="overlay">
     <h1>Fantastic Four Movie Collection</h1>
     <div class="movie-container">
-      <div class="movie-card"><a href="fantastic-four-2005.html">Fantastic Four (2005)</a></div>
-      <div class="movie-card"><a href="fantastic-four-2007.html">Fantastic Four: Rise of the Silver Surfer (2007)</a></div>
-      <div class="movie-card"><a href="fantastic-four-2015.html">Fantastic Four (2015)</a></div>
+      <div class="movie-card">
+        <img src="https://m.media-amazon.com/images/M/MV5BMTYzMDIwNTgzMF5BMl5BanBnXkFtZTcwMTkzNDUzMw@@._V1_FMjpg_UX1000_.jpg" alt="Fantastic Four 2005 Poster">
+        <a href="fantastic-four-2005.html">Fantastic Four (2005)</a>
+      </div>
+      <div class="movie-card">
+        <img src="https://m.media-amazon.com/images/M/MV5BMTMwMjUwMDU4Nl5BMl5BanBnXkFtZTcwMDAxNzMzMw@@._V1_.jpg" alt="Fantastic Four Rise of the Silver Surfer Poster">
+        <a href="fantastic-four-2007.html">Fantastic Four: Rise of the Silver Surfer (2007)</a>
+      </div>
+      <div class="movie-card">
+        <img src="https://m.media-amazon.com/images/M/MV5BMjM2Njc4NjcxMF5BMl5BanBnXkFtZTgwNjg2NTg5NTE@._V1_FMjpg_UX1000_.jpg" alt="Fantastic Four 2015 Poster">
+        <a href="fantastic-four-2015.html">Fantastic Four (2015)</a>
+      </div>
     </div>
   </div>
 </body>
