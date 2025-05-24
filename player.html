@@ -3,13 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <title>Premium Movie Player</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-  <script src="https://cdn.jsdelivr.net/npm/screenfull@6.0.2/dist/screenfull.min.js"></script>
   <style>
     @keyframes spin {
       0% { transform: rotate(0deg); }
@@ -81,40 +78,6 @@
       visibility: visible;
       opacity: 1;
     }
-    .lock-screen {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(0, 0, 0, 0.7);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      z-index: 30;
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-    .lock-screen.active {
-      opacity: 1;
-    }
-    .lock-screen-btn {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      z-index: 40;
-    }
-    .horizontal-controls {
-      display: none;
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: rgba(0, 0, 0, 0.7);
-      padding: 1rem;
-      z-index: 100;
-    }
     @media (max-width: 768px) {
       .controls-container {
         padding: 0.5rem;
@@ -127,29 +90,6 @@
       }
       .mobile-volume {
         display: block;
-      }
-      .horizontal-controls {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      }
-    }
-    @media (orientation: landscape) {
-      .video-container {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        padding-bottom: 0;
-        height: 100%;
-        border-radius: 0;
-      }
-      .horizontal-controls {
-        display: flex;
-      }
-      .normal-controls {
-        display: none;
       }
     }
   </style>
@@ -177,22 +117,8 @@
     <div class="video-container group" id="video-container">
       <video id="video" class="w-full" crossorigin="anonymous"></video>
       
-      <!-- Lock Screen Button -->
-      <button id="lock-btn" class="lock-screen-btn text-white hover:text-amber-400 transition">
-        <i class="fas fa-lock text-xl"></i>
-      </button>
-      
-      <!-- Lock Screen Overlay -->
-      <div id="lock-screen" class="lock-screen">
-        <button id="unlock-btn" class="text-white hover:text-amber-400 transition">
-          <i class="fas fa-unlock text-4xl mb-4"></i>
-          <p class="text-lg">Screen is locked</p>
-          <p class="text-sm text-gray-400">Tap to unlock controls</p>
-        </button>
-      </div>
-      
-      <!-- Normal Controls (Portrait) -->
-      <div id="normal-controls" class="controls-container absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4 opacity-0 group-hover:opacity-100">
+      <!-- Custom Controls -->
+      <div id="controls-container" class="controls-container absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4 opacity-0 group-hover:opacity-100">
         <!-- Progress Bar -->
         <div class="progress-container mb-2" id="progress-container">
           <div class="progress-bar" id="progress-bar"></div>
@@ -277,68 +203,6 @@
               <i class="fas fa-expand text-lg"></i>
             </button>
           </div>
-        </div>
-      </div>
-      
-      <!-- Horizontal Controls (Landscape) -->
-      <div id="horizontal-controls" class="horizontal-controls">
-        <div class="flex items-center space-x-6">
-          <button id="h-play-pause" class="text-white hover:text-amber-400 transition">
-            <i class="fas fa-play text-xl"></i>
-          </button>
-          <button id="h-rewind" class="text-white hover:text-amber-400 transition">
-            <i class="fas fa-backward text-lg"></i>
-          </button>
-          <button id="h-forward" class="text-white hover:text-amber-400 transition">
-            <i class="fas fa-forward text-lg"></i>
-          </button>
-          <div class="text-sm text-gray-300">
-            <span id="h-current-time">00:00</span> / <span id="h-duration">00:00</span>
-          </div>
-        </div>
-        
-        <div class="flex items-center space-x-4">
-          <button id="h-volume-btn" class="text-white hover:text-amber-400 transition">
-            <i class="fas fa-volume-up text-lg"></i>
-          </button>
-          <button id="h-fullscreen-btn" class="text-white hover:text-amber-400 transition">
-            <i class="fas fa-expand text-lg"></i>
-          </button>
-          <button id="h-settings-btn" class="text-white hover:text-amber-400 transition">
-            <i class="fas fa-ellipsis-v text-lg"></i>
-          </button>
-        </div>
-      </div>
-    </div>
-    
-    <!-- Settings Panel (Landscape) -->
-    <div id="settings-panel" class="fixed right-0 top-0 bottom-0 w-64 bg-gray-800 shadow-lg transform translate-x-full transition-transform z-50">
-      <div class="p-4 border-b border-gray-700 flex justify-between items-center">
-        <h3 class="text-lg font-semibold">Settings</h3>
-        <button id="close-settings" class="text-gray-400 hover:text-white">
-          <i class="fas fa-times"></i>
-        </button>
-      </div>
-      <div class="p-4">
-        <h4 class="text-md font-medium mb-2 text-amber-400">Playback Speed</h4>
-        <div class="space-y-1 mb-4">
-          <div class="speed-option px-3 py-2 cursor-pointer" data-speed="0.5">0.5x</div>
-          <div class="speed-option px-3 py-2 cursor-pointer" data-speed="0.75">0.75x</div>
-          <div class="speed-option px-3 py-2 cursor-pointer" data-speed="1">1x (Normal)</div>
-          <div class="speed-option px-3 py-2 cursor-pointer" data-speed="1.25">1.25x</div>
-          <div class="speed-option px-3 py-2 cursor-pointer" data-speed="1.5">1.5x</div>
-          <div class="speed-option px-3 py-2 cursor-pointer" data-speed="2">2x</div>
-        </div>
-        
-        <h4 class="text-md font-medium mb-2 text-amber-400">Subtitles</h4>
-        <div class="space-y-1 mb-4">
-          <div class="subtitle-option px-3 py-2 cursor-pointer" data-subtitle="none">None</div>
-          <div class="subtitle-option px-3 py-2 cursor-pointer" data-subtitle="en">English</div>
-        </div>
-        
-        <h4 class="text-md font-medium mb-2 text-amber-400">Quality</h4>
-        <div class="space-y-1" id="h-quality-options">
-          <div class="quality-option px-3 py-2 cursor-pointer" data-quality="auto">Auto</div>
         </div>
       </div>
     </div>
@@ -436,26 +300,18 @@
     const movieTitle = document.getElementById('movie-title');
     const videoContainer = document.getElementById('video-container');
     const controlsContainer = document.getElementById('controls-container');
-    const normalControls = document.getElementById('normal-controls');
-    const horizontalControls = document.getElementById('horizontal-controls');
     const progressContainer = document.getElementById('progress-container');
     const progressBar = document.getElementById('progress-bar');
     const currentTimeDisplay = document.getElementById('current-time');
-    const hCurrentTimeDisplay = document.getElementById('h-current-time');
     const durationDisplay = document.getElementById('duration');
-    const hDurationDisplay = document.getElementById('h-duration');
     const currentPosition = document.getElementById('current-position');
     const remainingTime = document.getElementById('remaining-time');
     const currentSpeed = document.getElementById('current-speed');
     const currentQuality = document.getElementById('current-quality');
     const playPauseBtn = document.getElementById('play-pause');
-    const hPlayPauseBtn = document.getElementById('h-play-pause');
     const rewindBtn = document.getElementById('rewind');
-    const hRewindBtn = document.getElementById('h-rewind');
     const forwardBtn = document.getElementById('forward');
-    const hForwardBtn = document.getElementById('h-forward');
     const volumeBtn = document.getElementById('volume-btn');
-    const hVolumeBtn = document.getElementById('h-volume-btn');
     const volumeSlider = document.getElementById('volume-slider');
     const mobileVolumeSlider = document.getElementById('mobile-volume-slider');
     const volumeContainer = document.getElementById('volume-container');
@@ -466,24 +322,14 @@
     const qualityBtn = document.getElementById('quality-btn');
     const qualityMenu = document.getElementById('quality-menu');
     const fullscreenBtn = document.getElementById('fullscreen-btn');
-    const hFullscreenBtn = document.getElementById('h-fullscreen-btn');
-    const hSettingsBtn = document.getElementById('h-settings-btn');
-    const settingsPanel = document.getElementById('settings-panel');
-    const closeSettingsBtn = document.getElementById('close-settings');
-    const hQualityOptions = document.getElementById('h-quality-options');
     const resumeBtn = document.getElementById('resume-btn');
     const restartBtn = document.getElementById('restart-btn');
-    const lockBtn = document.getElementById('lock-btn');
-    const unlockBtn = document.getElementById('unlock-btn');
-    const lockScreen = document.getElementById('lock-screen');
 
     // State variables
     let isDraggingProgress = false;
     let hls;
     let lastVolume = 1;
     let isSettingsMenuOpen = false;
-    let isScreenLocked = false;
-    let isLandscape = window.matchMedia("(orientation: landscape)").matches;
 
     // Initialize player
     function initPlayer() {
@@ -494,25 +340,6 @@
       
       // Start loading the video
       loadVideo();
-      
-      // Check orientation
-      window.addEventListener('resize', checkOrientation);
-      checkOrientation();
-    }
-
-    // Check device orientation
-    function checkOrientation() {
-      isLandscape = window.matchMedia("(orientation: landscape)").matches;
-      
-      if (isLandscape) {
-        document.body.classList.add('landscape');
-        horizontalControls.style.display = 'flex';
-        normalControls.style.display = 'none';
-      } else {
-        document.body.classList.remove('landscape');
-        horizontalControls.style.display = 'none';
-        normalControls.style.display = 'block';
-      }
     }
 
     // Set up all event listeners
@@ -525,26 +352,19 @@
       video.addEventListener('volumechange', updateVolumeIcon);
       video.addEventListener('click', togglePlayPause);
       video.addEventListener('dblclick', toggleFullscreen);
+      video.addEventListener('webkitbeginfullscreen', () => document.body.classList.add('fullscreen'));
+      video.addEventListener('webkitendfullscreen', () => document.body.classList.remove('fullscreen'));
       
       // Control buttons
       playPauseBtn.addEventListener('click', togglePlayPause);
-      hPlayPauseBtn.addEventListener('click', togglePlayPause);
       rewindBtn.addEventListener('click', () => seek(-10));
-      hRewindBtn.addEventListener('click', () => seek(-10));
       forwardBtn.addEventListener('click', () => seek(10));
-      hForwardBtn.addEventListener('click', () => seek(10));
       volumeBtn.addEventListener('click', toggleMute);
-      hVolumeBtn.addEventListener('click', toggleMute);
       volumeSlider.addEventListener('input', updateVolume);
       mobileVolumeSlider.addEventListener('input', updateVolume);
       fullscreenBtn.addEventListener('click', toggleFullscreen);
-      hFullscreenBtn.addEventListener('click', toggleFullscreen);
-      hSettingsBtn.addEventListener('click', toggleSettingsPanel);
-      closeSettingsBtn.addEventListener('click', toggleSettingsPanel);
       resumeBtn.addEventListener('click', resumeFromLastPosition);
       restartBtn.addEventListener('click', restartFromBeginning);
-      lockBtn.addEventListener('click', lockScreenHandler);
-      unlockBtn.addEventListener('click', unlockScreenHandler);
       
       // Progress bar
       progressContainer.addEventListener('mousedown', startDraggingProgress);
@@ -578,15 +398,13 @@
       // Show/hide controls on mouse movement
       let controlsTimeout;
       videoContainer.addEventListener('mousemove', () => {
-        if (!isScreenLocked) {
-          controlsContainer.style.opacity = '1';
-          clearTimeout(controlsTimeout);
-          controlsTimeout = setTimeout(() => {
-            if (!video.paused) {
-              controlsContainer.style.opacity = '0';
-            }
-          }, 3000);
-        }
+        controlsContainer.style.opacity = '1';
+        clearTimeout(controlsTimeout);
+        controlsTimeout = setTimeout(() => {
+          if (!video.paused) {
+            controlsContainer.style.opacity = '0';
+          }
+        }, 3000);
       });
       
       // Volume hover effect
@@ -605,10 +423,8 @@
           const speed = parseFloat(option.dataset.speed);
           video.playbackRate = speed;
           speedBtn.querySelector('span').textContent = `${speed}x`;
-          hPlayPauseBtn.querySelector('span')?.textContent = `${speed}x`;
           currentSpeed.textContent = `${speed}x`;
           speedMenu.classList.remove('active');
-          settingsPanel.classList.remove('active');
         });
       });
       
@@ -626,7 +442,6 @@
             }
           }
           subtitleMenu.classList.remove('active');
-          settingsPanel.classList.remove('active');
         });
       });
       
@@ -649,7 +464,6 @@
             currentQuality.textContent = quality === 'auto' ? 'Auto' : `${quality}p`;
             qualityBtn.innerHTML = `<i class="fas fa-cog text-lg"></i>`;
             qualityMenu.classList.remove('active');
-            settingsPanel.classList.remove('active');
           }
         });
       });
@@ -683,14 +497,6 @@
             `).join('')}
           `;
           
-          // Populate horizontal quality options
-          hQualityOptions.innerHTML = `
-            <div class="quality-option px-3 py-2 cursor-pointer" data-quality="auto">Auto</div>
-            ${data.levels.map(level => `
-              <div class="quality-option px-3 py-2 cursor-pointer" data-quality="${level.height}">${level.height}p</div>
-            `).join('')}
-          `;
-          
           // Set up quality option event listeners
           document.querySelectorAll('.quality-option').forEach(option => {
             option.addEventListener('click', () => {
@@ -709,7 +515,6 @@
               currentQuality.textContent = quality === 'auto' ? 'Auto' : `${quality}p`;
               qualityBtn.innerHTML = `<i class="fas fa-cog text-lg"></i>`;
               qualityMenu.classList.remove('active');
-              settingsPanel.classList.remove('active');
             });
           });
           
@@ -729,16 +534,6 @@
               <div class="subtitle-option px-3 py-2 cursor-pointer" data-subtitle="en">English</div>
             `;
             
-            // Update horizontal subtitle options
-            const subtitleOptions = settingsPanel.querySelectorAll('.subtitle-option');
-            if (subtitleOptions.length === 0) {
-              const subtitleSection = settingsPanel.querySelector('h4:nth-of-type(2)').nextElementSibling;
-              subtitleSection.innerHTML = `
-                <div class="subtitle-option px-3 py-2 cursor-pointer" data-subtitle="none">None</div>
-                <div class="subtitle-option px-3 py-2 cursor-pointer" data-subtitle="en">English</div>
-              `;
-            }
-            
             // Set up subtitle option event listeners
             document.querySelectorAll('.subtitle-option').forEach(option => {
               option.addEventListener('click', () => {
@@ -753,7 +548,6 @@
                   }
                 }
                 subtitleMenu.classList.remove('active');
-                settingsPanel.classList.remove('active');
               });
             });
           }
@@ -840,14 +634,10 @@
     // Update play/pause icon
     function updatePlayPauseIcon() {
       const icon = playPauseBtn.querySelector('i');
-      const hIcon = hPlayPauseBtn.querySelector('i');
-      
       if (video.paused) {
-        icon?.classList.replace('fa-pause', 'fa-play');
-        hIcon?.classList.replace('fa-pause', 'fa-play');
+        icon.classList.replace('fa-pause', 'fa-play');
       } else {
-        icon?.classList.replace('fa-play', 'fa-pause');
-        hIcon?.classList.replace('fa-play', 'fa-pause');
+        icon.classList.replace('fa-play', 'fa-pause');
       }
     }
 
@@ -882,42 +672,26 @@
     // Update volume icon
     function updateVolumeIcon() {
       const icon = volumeBtn.querySelector('i');
-      const hIcon = hVolumeBtn.querySelector('i');
-      
       if (video.volume === 0 || video.muted) {
-        icon?.classList.replace('fa-volume-up', 'fa-volume-mute');
-        hIcon?.classList.replace('fa-volume-up', 'fa-volume-mute');
+        icon.classList.replace('fa-volume-up', 'fa-volume-mute');
       } else if (video.volume < 0.5) {
-        icon?.classList.replace('fa-volume-mute', 'fa-volume-down');
-        icon?.classList.replace('fa-volume-up', 'fa-volume-down');
-        hIcon?.classList.replace('fa-volume-mute', 'fa-volume-down');
-        hIcon?.classList.replace('fa-volume-up', 'fa-volume-down');
+        icon.classList.replace('fa-volume-mute', 'fa-volume-down');
+        icon.classList.replace('fa-volume-up', 'fa-volume-down');
       } else {
-        icon?.classList.replace('fa-volume-mute', 'fa-volume-up');
-        icon?.classList.replace('fa-volume-down', 'fa-volume-up');
-        hIcon?.classList.replace('fa-volume-mute', 'fa-volume-up');
-        hIcon?.classList.replace('fa-volume-down', 'fa-volume-up');
+        icon.classList.replace('fa-volume-mute', 'fa-volume-up');
+        icon.classList.replace('fa-volume-down', 'fa-volume-up');
       }
     }
 
     // Toggle fullscreen
     function toggleFullscreen() {
-      if (screenfull.isEnabled) {
-        screenfull.toggle(videoContainer);
+      if (!document.fullscreenElement) {
+        videoContainer.requestFullscreen().catch(err => {
+          console.error(`Error attempting to enable fullscreen: ${err.message}`);
+        });
       } else {
-        if (!document.fullscreenElement) {
-          videoContainer.requestFullscreen().catch(err => {
-            console.error(`Error attempting to enable fullscreen: ${err.message}`);
-          });
-        } else {
-          document.exitFullscreen();
-        }
+        document.exitFullscreen();
       }
-    }
-
-    // Toggle settings panel
-    function toggleSettingsPanel() {
-      settingsPanel.classList.toggle('translate-x-full');
     }
 
     // Toggle settings menu
@@ -935,20 +709,6 @@
       }
     }
 
-    // Lock screen handler
-    function lockScreenHandler() {
-      isScreenLocked = true;
-      lockScreen.classList.add('active');
-      controlsContainer.style.opacity = '0';
-    }
-
-    // Unlock screen handler
-    function unlockScreenHandler() {
-      isScreenLocked = false;
-      lockScreen.classList.remove('active');
-      controlsContainer.style.opacity = '1';
-    }
-
     // Update progress bar
     function updateProgress() {
       if (!isDraggingProgress) {
@@ -958,9 +718,7 @@
       
       // Update time displays
       currentTimeDisplay.textContent = formatTime(video.currentTime);
-      hCurrentTimeDisplay.textContent = formatTime(video.currentTime);
       durationDisplay.textContent = formatTime(video.duration);
-      hDurationDisplay.textContent = formatTime(video.duration);
       currentPosition.textContent = formatTime(video.currentTime);
       remainingTime.textContent = formatTime(video.duration - video.currentTime);
       
@@ -973,7 +731,6 @@
     // Update duration display
     function updateDuration() {
       durationDisplay.textContent = formatTime(video.duration);
-      hDurationDisplay.textContent = formatTime(video.duration);
       remainingTime.textContent = formatTime(video.duration);
     }
 
@@ -1034,8 +791,6 @@
 
     // Handle keyboard shortcuts
     function handleKeyboardShortcuts(e) {
-      if (isScreenLocked) return;
-      
       switch(e.key) {
         case ' ':
           e.preventDefault();
@@ -1070,10 +825,6 @@
         case 'm':
         case 'M':
           toggleMute();
-          break;
-        case 'l':
-        case 'L':
-          lockScreenHandler();
           break;
       }
     }
