@@ -1,101 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Fantastic Four Collection</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <title>Live News</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
     body {
-      font-family: 'Orbitron', sans-serif;
-      background: url('https://m.media-amazon.com/images/M/MV5BMTY0ZTZmMjUtOTI1Yi00ZmRkLTgwYjQtZGU3MDcwYWM3MTUwXkEyXkFqcGc@._V1_.jpg') no-repeat center center fixed;
-      background-size: cover;
-      color: white;
-    }
-    .overlay {
-      background-color: rgba(0, 0, 0, 0.7);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 30px 15px;
-    }
-    h1 {
-      font-size: 2.5rem;
-      margin-bottom: 30px;
-      text-align: center;
-      text-shadow: 2px 2px #000;
-    }
-    .movie-container {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-      width: 100%;
-      max-width: 500px;
-    }
-    .movie-card {
-      background: rgba(255, 255, 255, 0.1);
-      border: 2px solid #00aaff;
-      border-radius: 15px;
+      background: black;
+      color: #ffcc00;
+      font-family: Arial, sans-serif;
+      margin: 0;
       padding: 20px;
       text-align: center;
-      backdrop-filter: blur(6px);
-      transition: transform 0.3s, background 0.3s;
     }
-    .movie-card:hover {
-      transform: scale(1.03);
-      background: rgba(0, 170, 255, 0.2);
+    h1 {
+      margin-bottom: 20px;
+      font-size: 2em;
     }
-    .movie-card a {
-      text-decoration: none;
-      color: #ffffff;
-      font-size: 1.1rem;
-      display: block;
-      margin-top: 10px;
+    .movies {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
     }
-    .movie-card img {
+    .movie {
+      background: #222;
+      border: 2px solid #ffcc00;
+      border-radius: 12px;
+      width: 200px;
+      padding: 10px;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+    .movie:hover {
+      transform: scale(1.05);
+      background: #333;
+    }
+    .movie img {
       width: 100%;
-      max-height: 300px;
-      border-radius: 10px;
+      height: 280px;
       object-fit: cover;
-      box-shadow: 0 0 10px rgba(0,0,0,0.5);
+      border-radius: 10px;
+    }
+    .movie-title {
+      margin-top: 10px;
+      font-size: 1em;
+      font-weight: bold;
+    }
+  
+    @media (max-width: 600px) {
+      .movies {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+      }
+      .movie {
+        width: 100%;
+        box-sizing: border-box;
+      }
+      .movie img {
+        height: auto;
+      }
     }
 
-    @media(min-width: 768px) {
-      .movie-container {
-        flex-direction: row;
-        justify-content: center;
-        max-width: 900px;
-      }
-      .movie-card {
-        flex: 1;
-      }
-    }
   </style>
 </head>
 <body>
-  <div class="overlay">
-    <h1>Fantastic Four Movie Collection</h1>
-    <div class="movie-container">
-      <div class="movie-card">
-        <img src="https://lh5.googleusercontent.com/proxy/_yrAqFgXYaT97Thn3H3-v4Ngw5rOqkFwZwdFkH3KNIyINTUWtg-3myOmey3QN-ANTw6euZx6Q_ly07zp1b-73S4lukN-3-xHO5xCR9Iy9D8" alt="Fantastic Four 2005 Poster">
-        <a href="fantastic-four-2005.html">Fantastic Four (2005)</a>
-      </div>
-      <div class="movie-card">
-        <img src="https://assets-prd.ignimgs.com/2022/11/18/f4rise-1668740849862.jpg" alt="Fantastic Four Rise of the Silver Surfer Poster">
-        <a href="fantastic-four-2007.html">Fantastic Four: Rise of the Silver Surfer (2007)</a>
-      </div>
-      <div class="movie-card">
-        <img src="https://wallpapers.com/images/hd/fantastic-four-2015-characters-ufrzeu5daic4gevg.jpg" alt="Fantastic Four 2015 Poster">
-        <a href="fantastic-four-2015.html">Fantastic Four (2015)</a>
-      </div>
-    </div>
-  </div>
+
+<h1>🚨 Live News Channels</h1>
+
+<div class="movies" id="movies"></div>
+
+<script>
+const movies = [
+  { title: "TV9 Marathi", video: "https://dyjmyiv3bp2ez.cloudfront.net/pub-iotv9marlygv8h/liveabr/playlist.m3u8", image: "https://yt3.googleusercontent.com/HB8cDZ8136P8A3e-YlAYHN8hsSIqfFweGFkXT_ZUi_3iRozZiLoUwCjTYHzFx10KSD1x7MMcKw=s900-c-k-c0x00ffffff-no-rj" },
+  { title: "Asianet News Kannada", video: "https://vidcdn.vidgyor.com:443/suvarna-origin/liveabr/suvarna-origin/live_720p/chunks.m3u8", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9VJqis436srFpYOXqxuVyeeZZypgjNPS4-Q&s" },
+  { title: "Asianet News Tamil", video: "https://vidcdn.vidgyor.com/ptm-origin/aslive/playlist.m3u8", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgtewW_rp9On01bkt8qNnh_tdaAgF0lGt1IQ&s" },
+  { title: "Good News TV", video: "https://bpgdlwwar3ze-hls-live.wmncdn.net/goodnews/live.stream/playlist.m3u8", image: "https://yt3.googleusercontent.com/hg_Z9skLIMof4uk0TI6Kf7m8lA9MLF1cZVZdqDUcWizRjfv1vLDQBzTGmd8IYpXA_FkFDs8mF_4=s900-c-k-c0x00ffffff-no-rj" },
+  { title: "India News Rajasthan", video: "https://livetv.newsx.com/itv/itvnetwork9/playlist.m3u8", image: "https://daex9l847wg3n.cloudfront.net/shemoutputimages/India-News-Rajasthan/5eeb7b28a609d2aeb400000b/large_16_9_1736753363.jpg" },
+  { title: "India News Madhya Pradesh/Chhatisgarh", video: "https://livetv.newsx.com/itv/itvnetwork7/playlist.m3u8", image: "https://static.wikia.nocookie.net/logopedia/images/7/7f/Inews_MP-CG.jpg/revision/latest?cb=20191222075042" },
+  { title: "News 24", video: "https://vidcdn.vidgyor.com/news24-origin/liveabr/playlist.m3u8", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_waJAccFBdkkKcs7dFZuChcYbNKKZEIWXWA&s" },
+  { title: "Sadhna Plus News", video: "https://6n3yow8pl9ok-hls-live.5centscdn.com/sadhananewstv/live.stream/playlist.m3u8", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKj-ln0Sq0qy-tF8BK03MExReW_vM5PmIWnw&s" },
+  { title: "Sudarshan News", video: "https://ott.livelegitpro.in:443/pusa/sudarshantv/tracks-v1a1/mono.m3u8", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRzniTUTcQf07GfTT1DBu2poJu96EoqioqztQ&s" },
+  { title: "VBC News", video: "https://5a1178b42cc03.streamlock.net/8200/8200/playlist.m3u8", image: "https://i.ytimg.com/vi/tZyjrbb2Qjs/maxresdefault.jpg" },
+];
+
+const container = document.getElementById('movies');
+movies.forEach((movie, index) => {
+  const div = document.createElement('div');
+  div.className = 'movie';
+  div.innerHTML = `
+    <img src="${movie.image}" alt="${movie.title}">
+    <div class="movie-title">${movie.title}</div>
+  `;
+  div.onclick = () => {
+    const url = `player.html?title=${encodeURIComponent(movie.title)}&video=${encodeURIComponent(movie.video)}&index=${index}`;
+    window.location.href = url;
+  };
+  container.appendChild(div);
+});
+</script>
+
 </body>
 </html>
